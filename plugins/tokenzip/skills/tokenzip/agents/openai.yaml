@@ -1,0 +1,6 @@
+interface:
+  display_name: "TokenZip"
+  short_description: "Talk like tokenzip. Cut filler. Keep technical accuracy."
+  icon_small: "./assets/tokenzip-small.svg"
+  icon_large: "./assets/tokenzip.svg"
+  default_prompt: "Use $tokenzip to answer briefly, cut filler, and preserve exact technical substance."

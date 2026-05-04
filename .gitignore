@@ -1,0 +1,11 @@
+benchmarks/results/*.json
+__pycache__/
+*.pyc
+.venv/
+.env.local
+tokenzip-compress.md
+**/.DS_Store
+.claude/worktrees/
+evals/snapshots/*.html
+evals/snapshots/*.png
+context/refs/research-brief-tokenzip-code-efficiency.md

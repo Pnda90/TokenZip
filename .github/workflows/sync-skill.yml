@@ -1,0 +1,115 @@
+name: Sync SKILL.md and rules
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - skills/tokenzip/SKILL.md
+      - skills/zipcrew/SKILL.md
+      - agents/zipcrew-*.md
+      - rules/tokenzip-activate.md
+      - tokenzip-compress/SKILL.md
+      - tokenzip-compress/scripts/**
+
+concurrency:
+  group: sync-skill
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Pull latest before making changes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git pull --rebase origin main
+
+      - name: Sync SKILL.md copies
+        run: |
+          cp skills/tokenzip/SKILL.md tokenzip/SKILL.md
+          cp skills/tokenzip/SKILL.md plugins/tokenzip/skills/tokenzip/SKILL.md
+          cp skills/tokenzip/SKILL.md .cursor/skills/tokenzip/SKILL.md
+          mkdir -p .windsurf/skills/tokenzip
+          cp skills/tokenzip/SKILL.md .windsurf/skills/tokenzip/SKILL.md
+
+      - name: Sync compress skill
+        run: |
+          # Sync to skills/compress (main location for Gemini CLI)
+          rm -rf skills/compress/scripts
+          cp tokenzip-compress/SKILL.md skills/compress/SKILL.md
+          sed -i 's/^name: tokenzip-compress$/name: compress/' skills/compress/SKILL.md
+          sed -i "s|The compression scripts live in \`tokenzip-compress/scripts/\` (adjacent to this SKILL.md). If the path is not immediately available, search for \`tokenzip-compress/scripts/__main__.py\`.|This SKILL.md lives alongside \`scripts/\` in the same directory. Find that directory.|" skills/compress/SKILL.md
+          sed -i 's|cd tokenzip-compress && python3|cd <directory_containing_this_SKILL.md> \&\& python3|' skills/compress/SKILL.md
+          cp -r tokenzip-compress/scripts skills/compress/scripts
+          rm -rf skills/compress/scripts/__pycache__
+
+      - name: Sync compress skill to plugin
+        run: |
+          # Copy SKILL.md and patch name + process instructions for plugin context
+          cp tokenzip-compress/SKILL.md plugins/tokenzip/skills/compress/SKILL.md
+          sed -i 's/^name: tokenzip-compress$/name: compress/' plugins/tokenzip/skills/compress/SKILL.md
+          sed -i "s|The compression scripts live in \`tokenzip-compress/scripts/\` (adjacent to this SKILL.md). If the path is not immediately available, search for \`tokenzip-compress/scripts/__main__.py\`.|This SKILL.md lives alongside \`scripts/\` in the same directory. Find that directory.|" plugins/tokenzip/skills/compress/SKILL.md
+          sed -i 's|cd tokenzip-compress && python3|cd <directory_containing_this_SKILL.md> \&\& python3|' plugins/tokenzip/skills/compress/SKILL.md
+          # Copy scripts verbatim
+          rm -rf plugins/tokenzip/skills/compress/scripts
+          cp -r tokenzip-compress/scripts plugins/tokenzip/skills/compress/scripts
+          rm -rf plugins/tokenzip/skills/compress/scripts/__pycache__
+
+      - name: Sync zipcrew skill + agents to plugin
+        run: |
+          mkdir -p plugins/tokenzip/skills/zipcrew plugins/tokenzip/agents
+          cp skills/zipcrew/SKILL.md plugins/tokenzip/skills/zipcrew/SKILL.md
+          cp agents/zipcrew-investigator.md plugins/tokenzip/agents/zipcrew-investigator.md
+          cp agents/zipcrew-builder.md plugins/tokenzip/agents/zipcrew-builder.md
+          cp agents/zipcrew-reviewer.md plugins/tokenzip/agents/zipcrew-reviewer.md
+
+      - name: Rebuild tokenzip.skill ZIP
+        run: cd skills && zip -r ../tokenzip.skill tokenzip/
+
+      - name: Sync auto-activation rules
+        run: |
+          BODY="rules/tokenzip-activate.md"
+
+          # Cline + Copilot — no frontmatter, direct copy
+          mkdir -p .clinerules .github
+          cp "$BODY" .clinerules/tokenzip.md
+          cp "$BODY" .github/copilot-instructions.md
+
+          # Cursor — needs alwaysApply frontmatter
+          mkdir -p .cursor/rules
+          printf '%s\n' '---' 'description: "TokenZip mode — terse communication, ~75% fewer tokens, full technical accuracy"' 'alwaysApply: true' '---' '' > .cursor/rules/tokenzip.mdc
+          cat "$BODY" >> .cursor/rules/tokenzip.mdc
+
+          # Windsurf — needs always_on frontmatter
+          mkdir -p .windsurf/rules
+          printf '%s\n' '---' 'trigger: always_on' '---' '' > .windsurf/rules/tokenzip.md
+          cat "$BODY" >> .windsurf/rules/tokenzip.md
+
+      - name: Commit and push if changed
+        run: |
+          git add \
+            tokenzip/SKILL.md \
+            skills/compress/ \
+            plugins/tokenzip/skills/compress/ \
+            plugins/tokenzip/skills/tokenzip/SKILL.md \
+            plugins/tokenzip/skills/zipcrew/SKILL.md \
+            plugins/tokenzip/agents/zipcrew-investigator.md \
+            plugins/tokenzip/agents/zipcrew-builder.md \
+            plugins/tokenzip/agents/zipcrew-reviewer.md \
+            .cursor/skills/tokenzip/SKILL.md \
+            .windsurf/skills/tokenzip/SKILL.md \
+            tokenzip.skill \
+            .clinerules/tokenzip.md \
+            .github/copilot-instructions.md \
+            .cursor/rules/tokenzip.mdc \
+            .windsurf/rules/tokenzip.md
+          git diff --staged --quiet && exit 0
+          git commit -m "chore: sync SKILL.md copies and auto-activation rules [skip ci]"
+          git push

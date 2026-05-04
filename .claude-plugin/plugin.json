@@ -1,0 +1,34 @@
+{
+  "name": "tokenzip",
+  "description": "Ultra-compressed communication mode. Cuts ~75% of tokens while keeping full technical accuracy by speaking like a tokenzip.",
+  "author": {
+    "name": "Julius Brussee",
+    "url": "https://github.com/JuliusBrussee"
+  },
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"${CLAUDE_PLUGIN_ROOT}/hooks/tokenzip-activate.js\"",
+            "timeout": 5,
+            "statusMessage": "Loading tokenzip mode..."
+          }
+        ]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"${CLAUDE_PLUGIN_ROOT}/hooks/tokenzip-mode-tracker.js\"",
+            "timeout": 5,
+            "statusMessage": "Tracking tokenzip mode..."
+          }
+        ]
+      }
+    ]
+  }
+}
