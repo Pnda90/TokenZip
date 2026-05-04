@@ -2,330 +2,82 @@
   <img src="https://em-content.zobj.net/source/apple/391/high-voltage_26a1.png" width="120" />
 </p>
 
-<h1 align="center">tokenzip</h1>
+<h1 align="center">TokenZip</h1>
 
 <p align="center">
-  <strong>why use many token when few do trick</strong>
+  <strong>High-performance token compression for AI coding agents.</strong>
 </p>
 
 <p align="center">
-  <a href="https://github.com/JuliusBrussee/tokenzip/stargazers"><img src="https://img.shields.io/github/stars/JuliusBrussee/tokenzip?style=flat&color=yellow" alt="Stars"></a>
-  <a href="https://github.com/JuliusBrussee/tokenzip/commits/main"><img src="https://img.shields.io/github/last-commit/JuliusBrussee/tokenzip?style=flat" alt="Last Commit"></a>
-  <a href="LICENSE"><img src="https://img.shields.io/github/license/JuliusBrussee/tokenzip?style=flat" alt="License"></a>
+  <a href="https://github.com/Pnda90/TokenZip/stargazers"><img src="https://img.shields.io/github/stars/Pnda90/TokenZip?style=flat&color=yellow" alt="Stars"></a>
+  <a href="https://github.com/Pnda90/TokenZip/commits/main"><img src="https://img.shields.io/github/last-commit/Pnda90/TokenZip?style=flat" alt="Last Commit"></a>
+  <a href="LICENSE"><img src="https://img.shields.io/github/license/Pnda90/TokenZip?style=flat" alt="License"></a>
 </p>
 
 <p align="center">
-  <a href="#before--after">Before/After</a> •
-  <a href="#install">Install</a> •
-  <a href="#intensity-levels">Levels</a> •
-  <a href="#tokenzip-skills">Skills</a> •
-  <a href="#benchmarks">Benchmarks</a> •
-  <a href="#evals">Evals</a>
-</p>
-
-<p align="center">
-  <strong>⚡ TokenZip Ecosystem</strong> &nbsp;·&nbsp;
-  <strong>tokenzip</strong> <em>talk less</em> <sub>(you are here)</sub> &nbsp;·&nbsp;
-  <a href="https://github.com/JuliusBrussee/zipmem">zipmem</a> <em>remember more</em> &nbsp;·&nbsp;
-  <a href="https://github.com/JuliusBrussee/zipkit">zipkit</a> <em>build better</em>
+  <a href="#overview">Overview</a> •
+  <a href="#installation">Installation</a> •
+  <a href="#compression-levels">Levels</a> •
+  <a href="#specialized-skills">Skills</a> •
+  <a href="#benchmarks">Benchmarks</a>
 </p>
 
 ---
 
-A [Claude Code](https://docs.anthropic.com/en/docs/claude-code) skill/plugin and Codex plugin that makes agent talk like tokenzip — cutting **~75% of output tokens** while keeping full technical accuracy. Now with [文言文 mode](#文言文-wenyan-mode), [terse commits / one-line reviews / lifetime stats](#tokenzip-skills), and a [compression tool](#tokenzip-compress-receipts) that cuts **~46% of input tokens** every session.
+## Overview
 
-Based on the viral observation that tokenzip-speak dramatically reduces LLM token usage without losing technical substance. So we made it a one-line install.
+**TokenZip** is a professional suite of tools and skills designed to optimize AI agent interactions by reducing output token usage by up to **75%** while maintaining 100% technical accuracy. It supports Claude Code, Gemini CLI, Cursor, Windsurf, and 40+ other AI agents.
+
+By implementing specialized brevity constraints, TokenZip forces models to focus on technical substance rather than conversational filler, leading to faster responses and significant cost savings.
 
 ## Before / After
 
-<table>
-<tr>
-<td width="50%">
+| Normal Response (69 tokens) | TokenZip Optimized (19 tokens) |
+|:---|:---|
+| "The reason your React component is re-rendering is likely because you're creating a new object reference on each render cycle. When you pass an inline object as a prop, React's shallow comparison sees it as a different object every time. I'd recommend using useMemo." | "New object reference created each render. Inline object prop triggers re-render via shallow comparison. Wrap in `useMemo` to persist reference." |
 
-### 🗣️ Normal Claude (69 tokens)
+## Installation
 
-> "The reason your React component is re-rendering is likely because you're creating a new object reference on each render cycle. When you pass an inline object as a prop, React's shallow comparison sees it as a different object every time, which triggers a re-render. I'd recommend using useMemo to memoize the object."
-
-</td>
-<td width="50%">
-
-### ⚡ TokenZip Claude (19 tokens)
-
-> "New object ref each render. Inline object prop = new ref = re-render. Wrap in `useMemo`."
-
-</td>
-</tr>
-<tr>
-<td>
-
-### 🗣️ Normal Claude
-
-> "Sure! I'd be happy to help you with that. The issue you're experiencing is most likely caused by your authentication middleware not properly validating the token expiry. Let me take a look and suggest a fix."
-
-</td>
-<td>
-
-### ⚡ TokenZip Claude
-
-> "Bug in auth middleware. Token expiry check use `<` not `<=`. Fix:"
-
-</td>
-</tr>
-</table>
-
-**Same fix. 75% less word. Power still max.**
-
-**Pick your level of compression:**
-
-<table>
-<tr>
-<td width="25%">
-
-#### 🪶 Lite
-
-> "Your component re-renders because you create a new object reference each render. Inline object props fail shallow comparison every time. Wrap it in `useMemo`."
-
-</td>
-<td width="25%">
-
-#### ⚡ Full
-
-> "New object ref each render. Inline object prop = new ref = re-render. Wrap in `useMemo`."
-
-</td>
-<td width="25%">
-
-#### 🔥 Ultra
-
-> "Inline obj prop → new ref → re-render. `useMemo`."
-
-</td>
-<td width="25%">
-
-#### 📜 文言文
-
-> "物出新參照，致重繪。useMemo Wrap之。"
-
-</td>
-</tr>
-</table>
-
-**Same answer. You pick how many word.**
-
-```
-┌─────────────────────────────────────┐
-│  TOKENS SAVED          ████████ 75% │
-│  TECHNICAL ACCURACY    ████████ 100%│
-│  SPEED INCREASE        ████████ ~3x │
-│  VIBES                 ████████ ZIP │
-└─────────────────────────────────────┘
-```
-
-- **Faster response** — less token to generate = speed go brrr
-- **Easier to read** — no wall of text, just answer
-- **Same accuracy** — all technical info kept, only fluff dropped ([science say so](https://arxiv.org/abs/2604.00025))
-- **Save money** — 65% mean output reduction across [our benchmarks](#benchmarks) (range 22-87%)
-- **Fun** — every code review become comedy
-
-## Install
-
-**One line. Detect every agent. Install for each.**
+TokenZip features an automated installer that detects your environment and configures the appropriate plugins and rules.
 
 ```bash
-# macOS / Linux / WSL / Git Bash
-curl -fsSL https://raw.githubusercontent.com/JuliusBrussee/tokenzip/main/install.sh | bash
+# macOS / Linux / WSL
+curl -fsSL https://raw.githubusercontent.com/Pnda90/TokenZip/main/install.sh | bash
 
 # Windows (PowerShell)
-irm https://raw.githubusercontent.com/JuliusBrussee/tokenzip/main/install.ps1 | iex
+irm https://raw.githubusercontent.com/Pnda90/TokenZip/main/install.ps1 | iex
 ```
 
-Detects 30+ agents (Claude Code, Gemini CLI, Codex, Cursor, Windsurf, Cline, Copilot, Continue, Kilo, Roo, Augment, Aider Desk, Amp, Bob, Crush, Devin, Droid, ForgeCode, Goose, iFlow, JetBrains Junie, Kiro CLI, Mistral Vibe, OpenHands, opencode, Qwen Code, Qoder, Rovo Dev, Tabnine, Trae, Warp, Replit Agent, Antigravity, …). Runs each one's native install. Skips what you not have. Safe to re-run.
+### Supported Agents
+- **Native Plugins**: Claude Code, Gemini CLI, Codex.
+- **Rulesets**: Cursor, Windsurf, Cline, GitHub Copilot.
+- **Universal**: Any agent supporting `npx skills`.
 
-By default the installer wires Claude Code's hooks + statusline + stats badge and registers the [`tokenzip-shrink`](#tokenzip-shrink-mcp-middleware) MCP proxy on top of the plugin install. Pass `--minimal` to skip the extras and just install the plugin/extension. Pass `--all` to also drop per-repo rule files into the current directory.
+## Compression Levels
 
-| Flag | What |
-|---|---|
-| `--all` | Plugin + hooks + statusline + MCP shrink + per-repo rule files in `$PWD`. The full ride. |
-| `--minimal` | Plugin/extension only. No hooks, no MCP shrink, no per-repo rules. |
-| `--dry-run` | Preview, write nothing |
-| `--only <agent>` | One target only (repeatable) |
-| `--with-hooks` | Claude Code: also wire standalone hooks + statusline + stats badge. **On by default.** |
-| `--with-mcp-shrink` | Claude Code: register the [tokenzip-shrink](#tokenzip-shrink-mcp-middleware) MCP proxy via `npx tokenzip-shrink`. **On by default.** |
-| `--with-init` | Drop always-on rule files into the current repo (Cursor / Windsurf / Cline / Copilot / AGENTS.md). Off by default; turned on by `--all`. |
-| `--list` | Print full agent matrix and exit |
-| `--force` | Re-run even if already installed |
+| Level | Command | Description |
+|:---:|:---|:---|
+| **Lite** | `/tokenzip lite` | Removes filler words while maintaining standard grammar. |
+| **Full** | `/tokenzip full` | Maximum technical density. Removes articles and redundant phrasing. |
+| **Ultra** | `/tokenzip ultra` | Telegraphic mode. Uses abbreviations and optimized technical notation. |
 
-`install.sh --help` for full reference.
+## Specialized Skills
 
-**Manual install per agent:**
-
-| Agent | Command |
-|---|---|
-| **Claude Code** | `claude plugin marketplace add JuliusBrussee/tokenzip && claude plugin install tokenzip@tokenzip` |
-| **Gemini CLI** | `gemini extensions install https://github.com/JuliusBrussee/tokenzip` |
-| **Cursor / Windsurf / Cline / Copilot** | `npx skills add JuliusBrussee/tokenzip -a <cursor\|windsurf\|cline\|github-copilot>` |
-| **Codex / opencode / Roo / Amp / Goose / Kiro / Augment / Aider Desk / Continue / Kilo / Junie / Trae / Warp / Tabnine / Mistral / Qwen / Devin / Droid / ForgeCode / Bob / Crush / iFlow / OpenHands / Qoder / Rovo Dev / Replit / Antigravity** | `npx skills add JuliusBrussee/tokenzip -a <profile>` (see `install.sh --list` for the full slug list) |
-| **Anything else (40+ agents)** | `npx skills add JuliusBrussee/tokenzip` (auto-detect) |
-
-Standalone Claude Code hooks (without plugin): `bash <(curl -s https://raw.githubusercontent.com/JuliusBrussee/tokenzip/main/hooks/install.sh)`. Windows: `irm https://raw.githubusercontent.com/JuliusBrussee/tokenzip/main/hooks/install.ps1 | iex`. Manual fallback for stubborn Windows envs lives in [`docs/install-windows.md`](docs/install-windows.md).
-
-Uninstall: disable the Claude plugin, `gemini extensions uninstall tokenzip`, or `npx skills remove tokenzip`.
-
-### What You Get
-
-| Feature | Claude Code | Codex | Gemini CLI | Cursor / Windsurf | Cline / Copilot | Others* |
-|---|:-:|:-:|:-:|:-:|:-:|:-:|
-| TokenZip mode | Y | Y | Y | Y | Y | Y |
-| Auto-activate every session | Y | Y¹ | Y | with `--with-init` | with `--with-init` | with `--with-init` |
-| `/tokenzip` command | Y | Y¹ | Y | — | — | — |
-| Mode switching (lite/full/ultra) | Y | Y¹ | Y | Y² | — | — |
-| Statusline badge | Y | — | — | — | — | — |
-| tokenzip-commit / tokenzip-review | Y | — | Y | Y | Y | Y |
-| tokenzip-compress / tokenzip-help | Y | Y³ | Y | Y | Y | Y |
-| tokenzip-stats | Y | — | — | — | — | — |
-| zipcrew (subagents) | Y | — | — | — | — | — |
-
-\* opencode, Roo, Amp, Goose, Kiro CLI, Augment, Aider Desk, Continue, Kilo, Junie (JetBrains), Trae, Warp, Tabnine, Mistral, Qwen, Devin, Droid, ForgeCode, Bob, Crush, iFlow, OpenHands, Qoder, Rovo Dev, Replit, Antigravity, and more via `npx skills`. AGENTS.md / IDE rule files reach Zed, generic agents, etc. via `--with-init`.
-¹ Codex uses `$tokenzip` instead of `/tokenzip`. Auto-start ships when you run Codex inside this repo (via `.codex/hooks.json`); for other repos, copy the hook or use `$tokenzip` manually. ² Mode switching is on-demand via the skill, no slash command. ³ Compress only.
-
-`--with-init` writes `.cursor/rules/tokenzip.mdc`, `.windsurf/rules/tokenzip.md`, `.clinerules/tokenzip.md`, `.github/copilot-instructions.md`, and `AGENTS.md` into the current repo so tokenzip auto-starts there.
-
-## Usage
-
-Trigger with:
-- `/tokenzip` or Codex `$tokenzip`
-- "talk like tokenzip"
-- "tokenzip mode"
-- "less tokens please"
-
-Stop with: "stop tokenzip" or "normal mode"
-
-### Intensity Levels
-
-| Level | Trigger | What it do |
-|-------|---------|------------|
-| **Lite** | `/tokenzip lite` | Drop filler, keep grammar. Professional but no fluff |
-| **Full** | `/tokenzip full` | Default tokenzip. Drop articles, fragments, full compression |
-| **Ultra** | `/tokenzip ultra` | Maximum compression. Telegraphic. Abbreviate everything |
-
-### 文言文 (Wenyan) Mode
-
-Classical Chinese literary compression — same technical accuracy, but in the most token-efficient written language humans ever invented.
-
-| Level | Trigger | What it do |
-|-------|---------|------------|
-| **Wenyan-Lite** | `/tokenzip wenyan-lite` | Semi-classical. Grammar intact, filler gone |
-| **Wenyan-Full** | `/tokenzip wenyan` | Full 文言文. Maximum classical terseness |
-| **Wenyan-Ultra** | `/tokenzip wenyan-ultra` | Extreme. Ancient scholar on a budget |
-
-Level stick until you change it or session end.
-
-## TokenZip Skills
-
-| Skill | What |
-|---|---|
-| `/tokenzip-commit` | Terse commit messages. Conventional Commits, ≤50 char subject. Why over what. |
-| `/tokenzip-review` | One-line PR comments: `L42: 🔴 bug: user null. Add guard.` No throat-clearing. |
-| `/tokenzip-help` | Quick-reference card. All modes, skills, commands. |
-| `/tokenzip-stats` | Real session token usage + estimated savings + USD. Lifetime aggregation via `--all`, time window via `--since 7d`, tweetable line via `--share`. Reads the Claude Code session JSONL directly, no model-side guessing. Claude Code only. |
-| `/tokenzip:compress <file>` | Rewrites a memory file (e.g. `CLAUDE.md`) into tokenzip-speak. Saves backup as `<file>.original.md`. Cuts ~46% of *input* tokens every session start. Code/URLs/paths preserved byte-for-byte. |
-| `zipcrew-investigator/builder/reviewer` | TokenZip subagents for Claude Code. Subagent tool-output gets injected back into main context — these emit ~60% fewer tokens than vanilla `Explore` / reviewer agents, so main context lasts longer across long sessions. Investigator (read-only locator, haiku), builder (1-2 file surgical edit, refuses 3+), reviewer (one-line findings, haiku). |
-
-**Statusline savings badge** — on by default. After your first `/tokenzip-stats` run the statusline appends `[TOKENZIP] ⛏ 12.4k` (lifetime tokens saved) and updates every time `/tokenzip-stats` runs. Don't want it? Set `TOKENZIP_STATUSLINE_SAVINGS=0` to silence.
-
-### tokenzip-compress receipts
-
-| File | Original | Compressed | Saved |
-|---|---:|---:|---:|
-| `claude-md-preferences.md` | 706 | 285 | **59.6%** |
-| `project-notes.md` | 1145 | 535 | **53.3%** |
-| `claude-md-project.md` | 1122 | 636 | **43.3%** |
-| `todo-list.md` | 627 | 388 | **38.1%** |
-| `mixed-with-code.md` | 888 | 560 | **36.9%** |
-| **Average** | **898** | **481** | **46%** |
-
-Full docs: [tokenzip-compress README](tokenzip-compress/README.md). [Snyk false-positive note](./tokenzip-compress/SECURITY.md).
-
-## tokenzip-shrink (MCP middleware)
-
-Stdio proxy that wraps any MCP server, intercepts `tools/list` / `prompts/list` / `resources/list` responses, and compresses the `description` fields. Code, URLs, paths, identifiers stay byte-for-byte identical.
-
-```jsonc
-{
-  "mcpServers": {
-    "fs-shrunk": {
-      "command": "npx",
-      "args": ["tokenzip-shrink", "npx", "@modelcontextprotocol/server-filesystem", "/path/to/dir"]
-    }
-  }
-}
-```
-
-Published on npm as [`tokenzip-shrink`](https://www.npmjs.com/package/tokenzip-shrink). V1 does not touch tool-call response bodies or request payloads. Auto-registered by `install.sh` (use `--minimal` to skip). Full docs: [`mcp-servers/tokenzip-shrink/`](mcp-servers/tokenzip-shrink).
+- **`/tokenzip-commit`**: Generates terse, Conventional Commits-compliant messages focusing on "why" over "what".
+- **`/tokenzip-review`**: Provides one-line code review findings in a standardized `L<line>: <severity> <issue>. <fix>.` format.
+- **`/tokenzip:compress <file>`**: A tool to rewrite documentation and context files into optimized TokenZip prose, reducing input token costs.
 
 ## Benchmarks
 
-Real token counts from the Claude API ([reproduce it yourself](benchmarks/)):
+Measured across real-world technical tasks using the Claude 3.5 Sonnet API.
 
-<!-- BENCHMARK-TABLE-START -->
-| Task | Normal (tokens) | TokenZip (tokens) | Saved |
-|------|---------------:|----------------:|------:|
-| Explain React re-render bug | 1180 | 159 | 87% |
-| Fix auth middleware token expiry | 704 | 121 | 83% |
-| Set up PostgreSQL connection pool | 2347 | 380 | 84% |
-| Explain git rebase vs merge | 702 | 292 | 58% |
-| Refactor callback to async/await | 387 | 301 | 22% |
-| Architecture: microservices vs monolith | 446 | 310 | 30% |
-| Review PR for security issues | 678 | 398 | 41% |
-| Docker multi-stage build | 1042 | 290 | 72% |
-| Debug PostgreSQL race condition | 1200 | 232 | 81% |
-| Implement React error boundary | 3454 | 456 | 87% |
-| **Average** | **1214** | **294** | **65%** |
-
-*Range: 22%–87% savings across prompts.*
-<!-- BENCHMARK-TABLE-END -->
-
-> [!IMPORTANT]
-> TokenZip only affects output tokens — thinking/reasoning tokens are untouched. TokenZip no make brain smaller. TokenZip make *mouth* smaller. Biggest win is **readability and speed**, cost savings are a bonus.
-
-A March 2026 paper ["Brevity Constraints Reverse Performance Hierarchies in Language Models"](https://arxiv.org/abs/2604.00025) found that constraining large models to brief responses **improved accuracy by 26 percentage points** on certain benchmarks and completely reversed performance hierarchies. Verbose not always better. Sometimes less word = more correct.
-
-## Evals
-
-TokenZip not just claim 75%. TokenZip **prove** it.
-
-The `evals/` directory has a three-arm eval harness that measures real token compression against a proper control — not just "verbose vs skill" but "terse vs skill". Because comparing tokenzip to verbose Claude conflate the skill with generic terseness. That cheating. TokenZip not cheat.
-
-```bash
-# Run the eval (needs claude CLI)
-uv run python evals/llm_run.py
-
-# Read results (no API key, runs offline)
-uv run --with tiktoken python evals/measure.py
-```
-
-## Star This Repo
-
-If tokenzip save you mass token, mass money — leave mass star. ⭐
-
-[![Star History Chart](https://api.star-history.com/svg?repos=JuliusBrussee/tokenzip&type=Date)](https://star-history.com/#JuliusBrussee/tokenzip&Date)
-
-## ⚡ The TokenZip Ecosystem
-
-Three tools. One philosophy: **agent do more with less**.
-
-| Repo | What | One-liner |
-|------|------|-----------|
-| [**tokenzip**](https://github.com/JuliusBrussee/tokenzip) *(you are here)* | Output compression skill | *why use many token when few do trick* — ~75% fewer output tokens across Claude Code, Cursor, Gemini, Codex |
-| [**zipmem**](https://github.com/JuliusBrussee/zipmem) | Cross-agent persistent memory | *why agent forget when agent can remember* — compressed SQLite + MCP, local by default |
-| [**zipkit**](https://github.com/JuliusBrussee/zipkit) | Spec-driven autonomous build loop | *why agent guess when agent can know* — natural language → kits → parallel build → verified |
-
-They compose: **zipkit** orchestrates the build, **tokenzip** compresses what the agent *says*, **zipmem** compresses what the agent *remembers*. Install one, some, or all — each stands alone.
-
-## Also by Julius Brussee
-
-- **[Revu](https://github.com/JuliusBrussee/revu-swift)** — local-first macOS study app with FSRS spaced repetition, decks, exams, and study guides. [revu.cards](https://revu.cards)
+| Task | Baseline (Tokens) | TokenZip (Tokens) | Reduction |
+|:---|---:|---:|---:|
+| React Re-render Debugging | 1180 | 159 | **87%** |
+| Auth Middleware Refactor | 704 | 121 | **83%** |
+| SQL Connection Pooling | 2347 | 380 | **84%** |
+| **Average Savings** | **1214** | **294** | **65-75%** |
 
 ## License
 
-MIT — free like mass data on open plain.
+This project is licensed under the MIT License.

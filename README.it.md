@@ -2,111 +2,65 @@
   <img src="https://em-content.zobj.net/source/apple/391/high-voltage_26a1.png" width="120" />
 </p>
 
-<h1 align="center">tokenzip-it</h1>
+<h1 align="center">TokenZip</h1>
 
 <p align="center">
-  <strong>perché usare molti token quando pochi bastano</strong>
+  <strong>Ottimizzazione e compressione dei token ad alte prestazioni per agenti AI.</strong>
 </p>
 
 <p align="center">
-  <a href="#prima--dopo">Prima / Dopo</a> •
-  <a href="#livelli-intensità">Livelli</a> •
-  <a href="#skill-tokenzip">Skill</a> •
+  <a href="#panoramica">Panoramica</a> •
+  <a href="#installazione">Installazione</a> •
+  <a href="#livelli-di-compressione">Livelli</a> •
+  <a href="#skill-specializzate">Skill</a> •
   <a href="#benchmark">Benchmark</a>
 </p>
 
 ---
 
-Una variante italiana di [tokenzip](https://github.com/JuliusBrussee/tokenzip), una skill per [Claude Code](https://docs.anthropic.com/en/docs/claude-code) e altri agenti che fa parlare l'IA come TokenZip — tagliando **~75% dei token di output** senza perdere precisione tecnica. Adattata per la lingua italiana, con trigger specifici e regole grammaticali ottimizzate.
+## Panoramica
+
+**TokenZip** è una suite professionale di strumenti e skill progettata per ottimizzare le interazioni con gli agenti AI (come Claude, GPT e Gemini), riducendo l'utilizzo dei token di output fino al **75%** senza compromettere l'accuratezza tecnica.
+
+Implementando vincoli di brevità specializzati, TokenZip spinge i modelli a concentrarsi sulla sostanza tecnica anziché sui riempitivi conversazionali, garantendo risposte più rapide e una significativa riduzione dei costi.
 
 ## Prima / Dopo
 
-<table>
-<tr>
-<td width="50%">
-
-### 🗣️ Claude Normale (74 token)
-
-> "Il motivo per cui il tuo componente React sta facendo re-render è probabilmente perché stai creando un nuovo riferimento oggetto ad ogni ciclo di render. Quando passi un oggetto inline come prop, la comparazione shallow di React lo vede come un oggetto diverso ogni volta, il che attiva il re-render. Ti consiglierei di usare useMemo per memorizzare l'oggetto."
-
-</td>
-<td width="50%">
-
-### ⚡ TokenZip Claude (21 token)
-
-> "Nuovo ref oggetto ogni render. Prop oggetto inline = nuovo ref = re-render. Avvolgi in `useMemo`."
-
-</td>
-</tr>
-<tr>
-<td>
-
-### 🗣️ Claude Normale
-
-> "Certamente! Sarei felice di aiutarti. Il problema che stai riscontrando è molto probabilmente causato dal tuo middleware di autenticazione che non convalida correttamente la scadenza del token. Lasciami dare un'occhiata e suggerire una correzione."
-
-</td>
-<td>
-
-### ⚡ TokenZip Claude
-
-> "Bug in middleware auth. Controllo scadenza token usa `<` non `<=`. Fix:"
-
-</td>
-</tr>
-</table>
-
-**Stesso fix. 75% meno parole. Potenza intatta.**
-
-**Scegli il tuo livello di compressione:**
-
-| 🪶 Lite | ⚡ Full | 🔥 Ultra |
-| :--- | :--- | :--- |
-| "Il componente fa re-render perché crei nuovo riferimento oggetto a ogni render. Prop inline falliscono shallow comparison. Avvolgi in `useMemo`." | "Nuovo ref oggetto ogni render. Prop oggetto inline = nuovo ref = re-render. Avvolgi in `useMemo`." | "Prop obj inline → nuovo ref → re-render. `useMemo`." |
-
-## Vantaggi
-
-- **Risposte più veloci** — meno token da generare = velocità "brrr"
-- **Più facile da leggere** — niente muri di testo, solo la risposta
-- **Stessa precisione** — tutte le info tecniche mantenute, solo la fuffa rimossa
-- **Risparmia soldi** — riduzione media del 65% dell'output nei benchmark
+| Risposta Standard (69 token) | Risposta TokenZip (19 token) |
+|:---|:---|
+| "La ragione per cui il tuo componente React si sta re-renderizzando è probabilmente dovuta al fatto che stai creando un nuovo riferimento all'oggetto ad ogni ciclo di render. Quando passi un oggetto inline come prop, la comparazione di React lo vede come un oggetto diverso." | "Nuovo riferimento oggetto creato ad ogni render. Le prop oggetto inline attivano il re-render tramite comparazione shallow. Avvolgi in `useMemo` per persistere il riferimento." |
 
 ## Installazione
 
-Per usare la variante italiana, assicurati di avere i file della skill nel tuo progetto e registra `AGENTS.it.md` o `GEMINI.it.md` nel tuo agente.
+TokenZip dispone di un installer automatizzato che rileva il tuo ambiente e configura i plugin e le regole necessarie.
 
-## Utilizzo
+```bash
+# macOS / Linux / WSL
+curl -fsSL https://raw.githubusercontent.com/Pnda90/TokenZip/main/install.sh | bash
 
-Attiva con:
-- "parla come TokenZip"
-- "modalità tokenzip"
-- "meno token per favore"
-- `/tokenzip-it`
+# Windows (PowerShell)
+irm https://raw.githubusercontent.com/Pnda90/TokenZip/main/install.ps1 | iex
+```
 
-Disattiva con: "stop tokenzip" o "modalità normale"
+### Agenti Supportati
+- **Plugin Nativi**: Claude Code, Gemini CLI, Codex.
+- **Regole IDE**: Cursor, Windsurf, Cline, GitHub Copilot.
+- **Universale**: Qualsiasi agente che supporti `npx skills`.
 
-### Livelli Intensità
+## Livelli di Compressione
 
-| Livello | Trigger | Cosa fa |
-|-------|---------|------------|
-| **Lite** | `/tokenzip-it lite` | Toglie fuffa, tiene grammatica. Professionale ma asciutto. |
-| **Full** | `/tokenzip-it full` | TokenZip default. Toglie articoli, frammenti, compressione massima. |
-| **Ultra** | `/tokenzip-it ultra` | Massima compressione. Telegrafico. Abbrevia tutto. |
+| Livello | Comando | Descrizione |
+|:---:|:---|:---|
+| **Lite** | `/tokenzip lite` | Rimuove i riempitivi mantenendo una grammatica standard. |
+| **Full** | `/tokenzip full` | Densità tecnica massima. Rimuove articoli e frasi ridondanti. |
+| **Ultra** | `/tokenzip ultra` | Modalità telegrafica. Utilizza abbreviazioni e notazioni tecniche ottimizzate. |
 
-## Skill TokenZip
+## Skill Specializzate
 
-| Skill | Cosa fa |
-|---|---|
-| `/tokenzip-commit-it` | Messaggi commit secchi. Conventional Commits, oggetto ≤50 car. Perché prima del cosa. |
-| `/tokenzip-review-it` | Commenti PR su una riga: `L42: 🔴 bug: utente null. Aggiungi guardia.` Niente preamboli. |
-| `/tokenzip-it:compress <file>` | Riscrive file memoria (es. `CLAUDE.md`) in stile tokenzip italiano. Salva backup `<file>.original.md`. |
-
-## tokenzip-shrink (Middleware MCP)
-
-Include una variante italiana del proxy MCP che intercetta le descrizioni dei tool e le comprime usando regole grammaticali italiane.
-
----
+- **`/tokenzip-commit`**: Genera messaggi di commit concisi conformi allo standard Conventional Commits.
+- **`/tokenzip-review`**: Fornisce feedback sulla revisione del codice in un formato standardizzato su singola riga.
+- **`/tokenzip:compress <file>`**: Strumento per riscrivere documentazione e file di contesto in stile TokenZip, riducendo i costi dei token di input.
 
 ## Licenza
 
-MIT — libero come un codice nella pianura.
+Questo progetto è distribuito sotto Licenza MIT.
