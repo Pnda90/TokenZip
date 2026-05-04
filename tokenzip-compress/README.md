@@ -5,159 +5,58 @@
 <h1 align="center">tokenzip-compress</h1>
 
 <p align="center">
-  <strong>shrink memory file. save token every session.</strong>
+  <strong>High-efficiency context compression for persistent memory.</strong>
 </p>
 
 ---
 
-A Claude Code skill that compresses your project memory files (`CLAUDE.md`, todos, preferences) into tokenzip format — so every session loads fewer tokens automatically.
+A specialized tool that optimizes project memory files (`CLAUDE.md`, todos, preferences) into compressed prose. This ensures that every new session loads significantly fewer tokens without losing essential project context.
 
-Claude read `CLAUDE.md` on every session start. If file big, cost big. TokenZip make file small. Cost go down forever.
+## Overview
 
-## What It Do
-
-```
-/tokenzip:compress CLAUDE.md
-```
-
-```
-CLAUDE.md          ← compressed (Claude reads this — fewer tokens every session)
-CLAUDE.original.md ← human-readable backup (you edit this)
-```
-
-Original never lost. You can read and edit `.original.md`. Run skill again to re-compress after edits.
-
-## Benchmarks
-
-Real results on real project files:
-
-| File | Original | Compressed | Saved |
-|------|----------:|----------:|------:|
-| `claude-md-preferences.md` | 706 | 285 | **59.6%** |
-| `project-notes.md` | 1145 | 535 | **53.3%** |
-| `claude-md-project.md` | 1122 | 636 | **43.3%** |
-| `todo-list.md` | 627 | 388 | **38.1%** |
-| `mixed-with-code.md` | 888 | 560 | **36.9%** |
-| **Average** | **898** | **481** | **46%** |
-
-All validations passed ✅ — headings, code blocks, URLs, file paths preserved exactly.
-
-## Before / After
-
-<table>
-<tr>
-<td width="50%">
-
-### 📄 Original (706 tokens)
-
-> "I strongly prefer TypeScript with strict mode enabled for all new code. Please don't use `any` type unless there's genuinely no way around it, and if you do, leave a comment explaining the reasoning. I find that taking the time to properly type things catches a lot of bugs before they ever make it to runtime."
-
-</td>
-<td width="50%">
-
-### ⚡ TokenZip (285 tokens)
-
-> "Prefer TypeScript strict mode always. No `any` unless unavoidable — comment why if used. Proper types catch bugs early."
-
-</td>
-</tr>
-</table>
-
-**Same instructions. 60% fewer tokens. Every. Single. Session.**
-
-## Security
-
-`tokenzip-compress` is flagged as Snyk High Risk due to subprocess and file I/O patterns detected by static analysis. This is a false positive — see [SECURITY.md](./SECURITY.md) for a full explanation of what the skill does and does not do.
-
-## Install
-
-Compress is built in with the `tokenzip` plugin. Install `tokenzip` once, then use `/tokenzip:compress`.
-
-If you need local files, the compress skill lives at:
-
-```bash
-tokenzip-compress/
-```
-
-**Requires:** Python 3.10+
+Claude and other agents read `CLAUDE.md` and related context files at the start of every session. Large files increase token consumption and costs for every interaction. TokenZip optimizes these files to maintain high technical fidelity while minimizing token overhead.
 
 ## Usage
 
-```
+```bash
 /tokenzip:compress <filepath>
 ```
 
-Examples:
-```
-/tokenzip:compress CLAUDE.md
-/tokenzip:compress docs/preferences.md
-/tokenzip:compress todos.md
-```
+When you run the compression, TokenZip creates:
+- **`CLAUDE.md`**: The optimized version (read by the AI for lower token usage).
+- **`CLAUDE.original.md`**: The human-readable backup (use this for editing).
 
-### What files work
+After making manual changes to the `.original.md` file, run the command again to re-sync the compressed version.
 
-| Type | Compress? |
-|------|-----------|
-| `.md`, `.txt`, `.rst`, `.typ`, `.typst`, `.tex` | ✅ Yes |
-| Extensionless natural language | ✅ Yes |
-| `.py`, `.js`, `.ts`, `.json`, `.yaml` | ❌ Skip (code/config) |
-| `*.original.md` | ❌ Skip (backup files) |
+## Benchmarks
 
-## How It Work
+Average results across standard project documentation:
 
-```
-/tokenzip:compress CLAUDE.md
-        ↓
-detect file type        (no tokens)
-        ↓
-Claude compresses       (tokens — one call)
-        ↓
-validate output         (no tokens)
-  checks: headings, code blocks, URLs, file paths, bullets
-        ↓
-if errors: Claude fixes cherry-picked issues only   (tokens — targeted fix)
-  does NOT recompress — only patches broken parts
-        ↓
-retry up to 2 times
-        ↓
-write compressed → CLAUDE.md
-write original   → CLAUDE.original.md
-```
+| File Type | Reduction |
+|:---|---:|
+| Project Preferences | **~60%** |
+| Technical Notes | **~53%** |
+| Task Lists / TODOs | **~38%** |
+| **Average Savings** | **~46%** |
 
-Only two things use tokens: initial compression + targeted fix if validation fails. Everything else is local Python.
+*All headings, code blocks, URLs, and file paths are preserved byte-for-byte during compression.*
 
-## What Is Preserved
+## How it Works
 
-TokenZip compress natural language. It never touch:
+The tool follows a multi-stage validation process:
+1. **Detection**: Analyzes the file type and structure.
+2. **Compression**: The AI generates a condensed version focused on technical substance.
+3. **Validation**: Local scripts verify that critical elements (links, code, paths) are unchanged.
+4. **Targeted Patching**: If inconsistencies are found, the AI performs surgical fixes rather than a full re-compression.
 
-- Code blocks (` ``` ` fenced or indented)
-- Inline code (`` `backtick content` ``)
-- URLs and links
-- File paths (`/src/components/...`)
-- Commands (`npm install`, `git commit`)
-- Technical terms, library names, API names
-- Headings (exact text preserved)
-- Tables (structure preserved, cell text compressed)
-- Dates, version numbers, numeric values
+## Security
 
-## Why This Matter
+`tokenzip-compress` uses subprocess and file I/O operations which may be flagged by some static analysis tools (like Snyk). These are essential for the validation and file management logic. For more details, see [SECURITY.md](./SECURITY.md).
 
-`CLAUDE.md` loads on **every session start**. A 1000-token project memory file costs tokens every single time you open a project. Over 100 sessions that's 100,000 tokens of overhead — just for context you already wrote.
+## Installation
 
-TokenZip cut that by ~46% on average. Same instructions. Same accuracy. Less waste.
+This skill is bundled with the main **TokenZip** installation.
 
-```
-┌────────────────────────────────────────────┐
-│  TOKEN SAVINGS PER FILE    █████       46% │
-│  SESSIONS THAT BENEFIT     ██████████ 100% │
-│  INFORMATION PRESERVED     ██████████ 100% │
-│  SETUP TIME                █            1x │
-└────────────────────────────────────────────┘
-```
+---
 
-## Part of TokenZip
-
-This skill is part of the [tokenzip](https://github.com/JuliusBrussee/tokenzip) toolkit — making Claude use fewer tokens without losing accuracy.
-
-- **tokenzip** — make Claude *speak* like tokenzip (cuts response tokens ~65%)
-- **tokenzip-compress** — make Claude *read* less (cuts context tokens ~46%)
+Part of the [TokenZip Ecosystem](https://github.com/Pnda90/TokenZip).
