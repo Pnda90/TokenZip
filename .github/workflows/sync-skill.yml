@@ -31,17 +31,21 @@ jobs:
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git pull --rebase origin main
 
+      - name: Install zip
+        run: sudo apt-get update && sudo apt-get install -y zip
+
       - name: Sync SKILL.md copies
         run: |
+          mkdir -p tokenzip plugins/tokenzip/skills/tokenzip .cursor/skills/tokenzip .windsurf/skills/tokenzip
           cp skills/tokenzip/SKILL.md tokenzip/SKILL.md
           cp skills/tokenzip/SKILL.md plugins/tokenzip/skills/tokenzip/SKILL.md
           cp skills/tokenzip/SKILL.md .cursor/skills/tokenzip/SKILL.md
-          mkdir -p .windsurf/skills/tokenzip
           cp skills/tokenzip/SKILL.md .windsurf/skills/tokenzip/SKILL.md
 
       - name: Sync compress skill
         run: |
           # Sync to skills/compress (main location for Gemini CLI)
+          mkdir -p skills/compress
           rm -rf skills/compress/scripts
           cp tokenzip-compress/SKILL.md skills/compress/SKILL.md
           sed -i 's/^name: tokenzip-compress$/name: compress/' skills/compress/SKILL.md
@@ -53,6 +57,7 @@ jobs:
       - name: Sync compress skill to plugin
         run: |
           # Copy SKILL.md and patch name + process instructions for plugin context
+          mkdir -p plugins/tokenzip/skills/compress
           cp tokenzip-compress/SKILL.md plugins/tokenzip/skills/compress/SKILL.md
           sed -i 's/^name: tokenzip-compress$/name: compress/' plugins/tokenzip/skills/compress/SKILL.md
           sed -i "s|The compression scripts live in \`tokenzip-compress/scripts/\` (adjacent to this SKILL.md). If the path is not immediately available, search for \`tokenzip-compress/scripts/__main__.py\`.|This SKILL.md lives alongside \`scripts/\` in the same directory. Find that directory.|" plugins/tokenzip/skills/compress/SKILL.md
@@ -71,7 +76,9 @@ jobs:
           cp agents/zipcrew-reviewer.md plugins/tokenzip/agents/zipcrew-reviewer.md
 
       - name: Rebuild tokenzip.skill ZIP
-        run: cd skills && zip -r ../tokenzip.skill tokenzip/
+        run: |
+          rm -f tokenzip.skill
+          cd skills && zip -r ../tokenzip.skill tokenzip/
 
       - name: Sync auto-activation rules
         run: |
@@ -113,3 +120,4 @@ jobs:
           git diff --staged --quiet && exit 0
           git commit -m "chore: sync SKILL.md copies and auto-activation rules [skip ci]"
           git push
+
