@@ -1,15 +1,14 @@
 {
   "name": "tokenzip",
   "version": "1.0.0",
-  "description": "<p align=\"center\">   <img src=\"https://em-content.zobj.net/source/apple/391/high-voltage_26a1.png\" width=\"120\" /> </p>",
+  "description": "",
   "main": "index.js",
   "directories": {
     "doc": "docs",
     "test": "tests"
   },
   "scripts": {
-  "test": "node"
-}
+    "test": "node"
   },
   "repository": {
     "type": "git",
