@@ -43,7 +43,7 @@ jobs:
         run: npm test -- tests/test_mcp_shrink.js
 
       - name: Test hooks
-        run: npm test -- tests/test_hooks.py
+        run: python3 tests/test_hooks.py
 
       - name: Test tokenzip init
         run: npm test -- tests/test_tokenzip_init.js
