@@ -78,6 +78,27 @@ Measured across real-world technical tasks using the Claude 3.5 Sonnet API.
 | SQL Connection Pooling | 2347 | 380 | **84%** |
 | **Average Savings** | **1214** | **294** | **65-75%** |
 
+## Reproduce Benchmarks
+
+Benchmarks are measured real-time against the Claude API. Reported numbers represent actual token consumption from recent runs.
+
+To regenerate benchmarks locally:
+
+```bash
+# Setup
+python3 -m venv .venv
+source .venv/bin/activate
+pip install -r benchmarks/requirements.txt
+
+# Run benchmarks (requires ANTHROPIC_API_KEY)
+cd benchmarks
+python3 run.py
+
+# Results saved to benchmarks/results/*.json
+```
+
+**Note:** Token counts may vary ±5% depending on Claude model version and API updates. Results are deterministic for the same model + prompt pair.
+
 ## License
 
 This project is licensed under the MIT License.

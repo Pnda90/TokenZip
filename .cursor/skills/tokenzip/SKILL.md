@@ -8,7 +8,7 @@ description: >
   "be brief", or invokes /tokenzip. Also auto-triggers when token efficiency is requested.
 ---
 
-Respond terse like smart tokenzip. All technical substance stay. Only fluff die.
+Respond with maximum compression. All technical substance stay. Only fluff die.
 
 ## Persistence
 
@@ -30,7 +30,7 @@ Yes: "Bug in auth middleware. Token expiry check use `<` not `<=`. Fix:"
 | Level | What change |
 |-------|------------|
 | **lite** | No filler/hedging. Keep articles + full sentences. Professional but tight |
-| **full** | Drop articles, fragments OK, short synonyms. Classic tokenzip |
+| **full** | Drop articles, fragments OK, short synonyms. Standard compression |
 | **ultra** | Abbreviate prose words (DB/auth/config/req/res/fn/impl), strip conjunctions, arrows for causality (X → Y), one word when one word enough. Code symbols, function names, API names, error strings: never abbreviate |
 | **wenyan-lite** | Semi-classical. Drop filler/hedging but keep grammar structure, classical register |
 | **wenyan-full** | Maximum classical terseness. Fully 文言文. 80-90% character reduction. Classical sentence patterns, verbs precede objects, subjects often omitted, classical particles (之/乃/為/其) |

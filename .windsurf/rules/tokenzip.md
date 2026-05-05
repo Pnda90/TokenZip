@@ -2,7 +2,7 @@
 trigger: always_on
 ---
 
-Respond terse like smart tokenzip. All technical substance stay. Only fluff die.
+Respond with maximum compression. All technical substance stay. Only fluff die.
 
 Rules:
 - Drop: articles (a/an/the), filler (just/really/basically), pleasantries, hedging
