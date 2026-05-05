@@ -1,0 +1,24 @@
+{
+  "name": "tokenzip",
+  "version": "1.0.0",
+  "description": "<p align=\"center\">   <img src=\"https://em-content.zobj.net/source/apple/391/high-voltage_26a1.png\" width=\"120\" /> </p>",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs",
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Pnda90/TokenZip.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Pnda90/TokenZip/issues"
+  },
+  "homepage": "https://github.com/Pnda90/TokenZip#readme"
+}
