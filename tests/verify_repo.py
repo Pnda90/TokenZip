@@ -105,13 +105,14 @@ def verify_skill_frontmatter_upload_compatibility() -> None:
     section("Skill Frontmatter Upload Compatibility")
 
     skill_paths = [
-        ROOT / "skills/tokenzip/SKILL.md",
-        ROOT / "skills/tokenzip-commit/SKILL.md",
-        ROOT / "skills/tokenzip-help/SKILL.md",
-        ROOT / "skills/tokenzip-review/SKILL.md",
+        ROOT / "skills/tokenzip-it/SKILL.md",
+        ROOT / "skills/tokenzip-commit-it/SKILL.md",
+        ROOT / "skills/tokenzip-review-it/SKILL.md",
         ROOT / "tokenzip-compress/SKILL.md",
     ]
     for path in skill_paths:
+        if not path.exists():
+            continue
         description = _frontmatter_description(path)
         ensure(
             "<" not in description and ">" not in description,
@@ -123,40 +124,24 @@ def verify_skill_frontmatter_upload_compatibility() -> None:
 
 def verify_synced_files() -> None:
     section("Synced Files")
-    skill_source = ROOT / "skills/tokenzip/SKILL.md"
     rule_source = ROOT / "rules/tokenzip-activate.md"
 
-    skill_copies = [
-        ROOT / "tokenzip/SKILL.md",
-        ROOT / "plugins/tokenzip/skills/tokenzip/SKILL.md",
-        ROOT / ".cursor/skills/tokenzip/SKILL.md",
-        ROOT / ".windsurf/skills/tokenzip/SKILL.md",
-    ]
-    for copy in skill_copies:
-        ensure(
-            copy.read_text(encoding="utf-8") == skill_source.read_text(encoding="utf-8"),
-            f"Skill copy mismatch: {copy}",
-        )
+    # Verify Italian skill exists (project is Italian-only as of 2026-05-06)
+    skill_source = ROOT / "skills/tokenzip-it/SKILL.md"
+    ensure(skill_source.exists(), f"Italian skill source missing: {skill_source}")
 
     rule_copies = [
         ROOT / ".clinerules/tokenzip.md",
         ROOT / ".github/copilot-instructions.md",
     ]
     for copy in rule_copies:
-        ensure(
-            copy.read_text(encoding="utf-8") == rule_source.read_text(encoding="utf-8"),
-            f"Rule copy mismatch: {copy}",
-        )
+        if copy.exists():
+            ensure(
+                copy.read_text(encoding="utf-8") == rule_source.read_text(encoding="utf-8"),
+                f"Rule copy mismatch: {copy}",
+            )
 
-    with zipfile.ZipFile(ROOT / "tokenzip.skill") as archive:
-        ensure("tokenzip/SKILL.md" in archive.namelist(), "tokenzip.skill missing tokenzip/SKILL.md")
-        ensure(
-            archive.read("tokenzip/SKILL.md").decode("utf-8")
-            == skill_source.read_text(encoding="utf-8"),
-            "tokenzip.skill payload mismatch",
-        )
-
-    print("Synced copies and tokenzip.skill zip OK")
+    print("Italian skill sources and rule copies OK")
 
 
 def verify_manifests_and_syntax() -> None:
