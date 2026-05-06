@@ -161,9 +161,10 @@ def verify_manifests_and_syntax() -> None:
     run(["node", "--check", "hooks/tokenzip-config.js"])
     run(["node", "--check", "hooks/tokenzip-activate.js"])
     run(["node", "--check", "hooks/tokenzip-mode-tracker.js"])
-    run(["bash", "-n", "hooks/install.sh"])
-    run(["bash", "-n", "hooks/uninstall.sh"])
-    run(["bash", "-n", "hooks/tokenzip-statusline.sh"])
+    if os.name != "nt":
+        run(["bash", "-n", "hooks/install.sh"])
+        run(["bash", "-n", "hooks/uninstall.sh"])
+        run(["bash", "-n", "hooks/tokenzip-statusline.sh"])
 
     # Ensure install/uninstall scripts include tokenzip-config.js
     install_sh = (ROOT / "hooks/install.sh").read_text(encoding="utf-8")
@@ -250,6 +251,10 @@ def verify_compress_cli() -> None:
 
 def verify_hook_install_flow() -> None:
     section("Claude Hook Flow")
+
+    if os.name == "nt":
+        print("Skipping bash-based hook flow on Windows")
+        return
 
     ensure(shutil.which("node") is not None, "node is required for hook verification")
     ensure(shutil.which("bash") is not None, "bash is required for hook verification")
