@@ -24,7 +24,7 @@
 
 Implementando vincoli di brevità specializzati, TokenZip spinge i modelli a concentrarsi sulla sostanza tecnica anziché sui riempitivi conversazionali, garantendo risposte più rapide e una significativa riduzione dei costi.
 
-> **Nota:** TokenZip è stato ricreato per la comunità italiana, adattando i concetti di caveman per sviluppatori che preferiscono documentazione e interazioni 100% in italiano. Questo progetto mantiene la qualità professionale dello standard internazionale.
+> **Nota:** TokenZip è stato ricreato per la comunità italiana, adattando i concetti di **[caveman](https://github.com/JuliusBrussee/caveman)** (di Julius Brussee) per sviluppatori che preferiscono documentazione e interazioni 100% in italiano. Questo progetto mantiene la qualità professionale dello standard internazionale. Licenza MIT — compatibile con l'opera originaria.
 
 ## Prima / Dopo
 
