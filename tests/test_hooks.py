@@ -9,6 +9,9 @@ from pathlib import Path
 REPO_ROOT = Path(__file__).resolve().parent.parent
 
 
+@unittest.skipIf(os.name == "nt", "Test hook bash non supportati su Windows in CI")
+
+
 class HookScriptTests(unittest.TestCase):
     def run_cmd(self, cmd, home):
         env = os.environ.copy()
